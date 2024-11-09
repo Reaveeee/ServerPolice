@@ -1,0 +1,4 @@
+name: ServerPolice
+version: '1.0-SNAPSHOT'
+main: de.reave.serverPolice.ServerPolice
+api-version: '1.21'
