@@ -1,4 +1,4 @@
-package de.reave.serverPolice.DataManagement;
+package de.reave.serverPolice.dataManagement;
 
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
@@ -8,6 +8,7 @@ public class PlayerData {
     Vector lastVelocity;
     boolean lastOnGround;
     int flagLevel;
+    boolean setbacks = true;
 
     PlayerData(Location lastPosition, Vector lastVelocity){
         this.lastPosition = lastPosition;
@@ -44,5 +45,13 @@ public class PlayerData {
 
     public void setLastOnGround(boolean lastOnGround) {
         this.lastOnGround = lastOnGround;
+    }
+
+    public boolean isSetbacks() {
+        return setbacks;
+    }
+
+    public void setSetbacks(boolean setbacks) {
+        this.setbacks = setbacks;
     }
 }

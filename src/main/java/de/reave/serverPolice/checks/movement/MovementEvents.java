@@ -1,20 +1,17 @@
-package de.reave.serverPolice.Checks.Movement;
+package de.reave.serverPolice.checks.movement;
 
 
-import de.reave.serverPolice.DataManagement.PlayerData;
-import de.reave.serverPolice.Utility.Utils;
+import de.reave.serverPolice.dataManagement.PlayerData;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.util.Vector;
 
-import static de.reave.serverPolice.Utility.Utils.*;
+import static de.reave.serverPolice.utility.Utils.*;
 
 public class MovementEvents implements Listener {
     @EventHandler
@@ -30,7 +27,6 @@ public class MovementEvents implements Listener {
         Player player = event.getPlayer();
         PlayerData playerData = playerDataMap.get(player);
 
-        double acceleration = playerData.getLastVelocity().getY();
 
         Vector expectedPositionVector = new Vector(playerData.getLastPosition().getX() + playerData.getLastVelocity().getX(), playerData.getLastPosition().getY() + playerData.getLastVelocity().getY(), playerData.getLastPosition().getZ() + playerData.getLastVelocity().getZ());
 
@@ -45,7 +41,7 @@ public class MovementEvents implements Listener {
         }
             //OnGround
         if(player.isOnGround() != isPlayerOnGround(player)){
-            flagPlayerSpoofGround(player, playerData);
+            //flagPlayerSpoofGround(player, playerData);
         }
 
         playerData.setLastPosition(player.getLocation());
@@ -54,8 +50,9 @@ public class MovementEvents implements Listener {
     }
 
     public void flagPlayerPosition(Player player, PlayerData playerData, Location expectedPosition, PlayerMoveEvent event) {
-        player.getServer().broadcastMessage(prefixString("Unexpected Position | FlagLevel: " + playerData.getFlagLevel() + " | Expected Position: " + expectedPosition.toVector() + " | Position: " + player.getLocation().toVector(), ChatColor.RED));
+        player.getServer().broadcastMessage(prefixString("Unexpected Position | FlagLevel: " + playerData.getFlagLevel() + " | Expected Position: " + expectedPosition.toVector().getY() + " | Position: " + player.getLocation().toVector().getY(), ChatColor.RED));
         playerData.setFlagLevel(playerData.getFlagLevel() + 1);
+        if(!playerData.isSetbacks()) return;
         if (!expectedPosition.getBlock().isPassable()) {
             player.teleport(new Location(player.getWorld(), playerData.getLastPosition().getX(), playerData.getLastPosition().getY(), playerData.getLastPosition().getZ(), player.getLocation().getYaw(), player.getLocation().getPitch()));
             return;

@@ -1,11 +1,10 @@
-package de.reave.serverPolice.DataManagement;
+package de.reave.serverPolice.dataManagement;
 
-import de.reave.serverPolice.Utility.Utils;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import static de.reave.serverPolice.Utility.Utils.playerDataMap;
+import static de.reave.serverPolice.utility.Utils.playerDataMap;
 
 public class DataManagementEvents implements Listener {
     @EventHandler
